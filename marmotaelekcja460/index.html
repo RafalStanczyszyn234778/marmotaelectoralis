@@ -330,7 +330,10 @@ svg.map line.lead.on{opacity:.45}
 /* Świstak */
 svg.sw{display:block;overflow:visible;filter:drop-shadow(0 4px 10px rgba(0,0,0,.13))}   /* 24.10: ręka „wita” wystawała poza ramkę i była ucinana */   /* svg - .sw w panelu to kropka partii */
 /* świstak-przycisk: bez wyglądu przycisku, ale z klawiaturą i fokusem (głaskanie) */
-button.pet,button.pet:hover:not(:disabled){all:unset;display:block;cursor:pointer;position:relative;z-index:2;flex:none}
+button.pet{all:unset;display:block;cursor:pointer;position:relative;z-index:2;flex:none}
+/* 26.10: najechanie nie może znowu robić all:unset - kasowało margines świstaka na marginesie (.float .pet),
+   świstak uciekał spod kursora i wracał, czyli skakał w tę i z powrotem. Tu tylko gasimy kolory przycisku. */
+button.pet:hover:not(:disabled){background:none;color:inherit;border-color:transparent}
 button.pet:focus-visible{outline:2px solid #2F7CA8;outline-offset:6px;border-radius:4px}
 button.pet:active .sw{transform:scale(.97)}
 /* kartka: biała, cienka ramka, lekko obrócona, maszynopis świstaka; wysokość stała */
