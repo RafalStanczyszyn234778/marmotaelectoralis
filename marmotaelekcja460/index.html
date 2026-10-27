@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-OwI2ei1F2slFaz7JOWb04M5v9CG+JfngqWNiIzVmj50='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-e5NW8QXmCeEY88ZrG4RlMO67UTm+Ln/F2O2oovTTLDc='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MarmotaElekcja460 - symulator podziału mandatów</title>
+<meta name="description" content="Symulator podziału 460 mandatów w Sejmie RP z prawdziwymi wynikami wyborów z lat 1991-2023. Zmieniaj wyniki w kraju i w okręgach i zobacz, jak przesuwają się mandaty."><link rel="canonical" href="https://marmotaelectoralis.com/marmotaelekcja460/"><link rel="alternate" hreflang="pl" href="https://marmotaelectoralis.com/marmotaelekcja460/"><link rel="alternate" hreflang="en" href="https://marmotaelectoralis.com/marmotaelekcja460/en/">
 <link rel="stylesheet" href="/fonts/fonts.css">
 <style>
 :root{--page:#FCFAFA;--card:#fff;--line:#E8E2E2;--hair:#E4E4E4;--ink:#1A1A1A;--grey:#8E8E8E;--mid:#555;
@@ -48,7 +49,7 @@ button:disabled{opacity:.35;cursor:not-allowed}
 button:focus-visible{outline:2px solid #2F7CA8;outline-offset:2px}
 
 /* układ główny: mapa + panel */
-.main{display:grid;grid-template-columns:1fr;gap:1.4rem;align-items:start}
+.main{display:grid;grid-template-columns:minmax(0,1fr);gap:1.4rem;align-items:start}
 /* przy karcie 1060 px panel potrzebuje trochę więcej miejsca, żeby nazwy list się nie łamały */
 /* panel ma stałą szerokość, cała reszta idzie na mapę */
 @media(min-width:960px){.main{grid-template-columns:minmax(0,1fr) 400px}}
@@ -173,7 +174,7 @@ svg.map line.lead.on{opacity:.45}
 .modes button{flex:1;border-radius:0;font-size:.6rem;padding:.5rem .3rem}
 .modes button:first-child{border-radius:2px 0 0 2px}
 .modes button:last-child{border-radius:0 2px 2px 0;border-left:none}
-.prow{display:grid;grid-template-columns:1rem .7rem 1fr 4.6rem;gap:.45rem .3rem;align-items:center;
+.prow{display:grid;grid-template-columns:1rem .7rem minmax(0,1fr) 4.6rem;gap:.45rem .3rem;align-items:center;
  padding:.3rem 0;border-bottom:1px solid var(--hair)}
 .prow.drag{opacity:.35}
 .prow.dropbefore{box-shadow:inset 0 3px 0 -1px #1A1A1A}
@@ -207,7 +208,7 @@ svg.map line.lead.on{opacity:.45}
 .donlbl{display:block;font:500 .55rem/1.3 var(--mono);letter-spacing:.02em;color:#9A938B;
  margin:-.25rem 0 .35rem}
 .donlbl:empty{display:none}
-.prow.dist{grid-template-columns:1rem .7rem 1fr 4.6rem}
+.prow.dist{grid-template-columns:1rem .7rem minmax(0,1fr) 4.6rem}
 .prow.dist .tags{grid-column:3/5}
 .prow .tags{grid-column:3/5;display:flex;gap:.3rem;flex-wrap:wrap;margin:-.1rem 0 .2rem}
 .tag{margin-left:.3rem;vertical-align:middle;font:600 .5rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
@@ -306,7 +307,8 @@ svg.map line.lead.on{opacity:.45}
  text-transform:none;padding:.4rem .55rem}
 .seatkey button{transition:opacity .2s,border-color .2s}
 .seatkey.picking button{opacity:.42}
-.seatkey.picking button.inco{opacity:1;border-color:#1A1A1A;border-width:2px;font-weight:700}
+.seatkey.picking button.inco{opacity:1;border-color:#1A1A1A;box-shadow:inset 0 0 0 1px #1A1A1A;font-weight:700}
+/* 27.10: grubsza ramka przez cień, nie border-width - 2px ramki poszerzało kafelek i przesuwało sąsiadów (skakanie na telefonie) */
 .seatkey i{width:.62rem;height:.62rem;border-radius:50%}
 .seatkey b{font-family:var(--sans);font-weight:800;font-size:.82rem}
 .coal{margin:1.8rem auto 0;max-width:56ch;text-align:center}
@@ -443,8 +445,12 @@ table.res{border-collapse:collapse;width:100%;margin-top:.6rem}
  .prow .mv,.prow .fl{min-height:2.2rem}
  /* ikony miały 22px szerokości - na palec za wąsko, więc na wąskim ekranie
     poszerzamy obie kolumny ikon kosztem nazwy */
- .prow{grid-template-columns:.8rem .7rem 1fr 2rem 2rem 4.2rem;gap:.4rem .25rem}
+ .prow{grid-template-columns:.8rem .7rem minmax(0,1fr) 2rem 2rem 4.2rem;gap:.4rem .25rem}
  .prow .nm{min-height:2.2rem;display:flex;align-items:center;gap:.3rem}
+/* 27.10: długie nazwy (1991-1997) rozpychały kolumnę panelu i mapa na telefonie wychodziła poza kartę;
+   kolumny grid mogą teraz zejść do zera, a nazwa łamie się w środku słowa, jeśli musi */
+.main>*{min-width:0}
+.prow .nm{min-width:0;overflow-wrap:anywhere}
  /* przełączniki widoku i legenda hemicyklu miały 28-31px - na palec za mało */
  .viewtog button,.seatkey button,#seatkey button{min-height:2.4rem}
  #setbar button,#selbar button{min-height:2.3rem;font-size:.6rem}
@@ -2126,7 +2132,12 @@ const KOTWICE_SW={};
 function kotwicaSw(id){if(KOTWICE_SW[id])return KOTWICE_SW[id];const sym=document.getElementById(id);if(!sym)return null;
  const NS="http://www.w3.org/2000/svg",sv=document.createElementNS(NS,"svg"),g=document.createElementNS(NS,"g");
  sv.setAttribute("viewBox",sym.getAttribute("viewBox")||"0 0 65 68");sv.style.cssText="position:absolute;left:-9999px;top:0;width:100px;height:100px";
- [...sym.children].forEach(c=>g.appendChild(c.cloneNode(true)));sv.appendChild(g);document.body.appendChild(sv);
+ // 27.10: kopia do pomiaru BEZ id i bez <defs>/<mask>/gradientów. Safari (WebKit) przy zdublowanych id przepinał
+ // odwołania url(#...) na tę kopię, a po jej usunięciu gubił gradienty i maski - głowa robiła się czarna.
+ const ZASOBY=/^(defs|mask|lineargradient|radialgradient|clippath|filter)$/i;
+ [...sym.children].forEach(c=>{if(ZASOBY.test(c.tagName))return;const k=c.cloneNode(true);k.removeAttribute("id");
+  k.querySelectorAll("defs,mask,linearGradient,radialGradient,clipPath,filter").forEach(e=>e.remove());
+  k.querySelectorAll("[id]").forEach(e=>e.removeAttribute("id"));g.appendChild(k)});sv.appendChild(g);document.body.appendChild(sv);
  let best=null,ba=0;g.querySelectorAll("path,ellipse,circle").forEach(e=>{if(e.closest("mask,defs,clipPath"))return;
   try{const r=e.getBBox(),a=r.width*r.height;if(a>ba){ba=a;best=r}}catch(_){}});
  if(!best)best=g.getBBox();sv.remove();
@@ -5121,16 +5132,31 @@ function paintHemi(R){
    marks.forEach(([n,t],i)=>{const e=document.createElement("div");e.className=i===0?"thrm":"thrm soft "+(i===marks.length-1?"high":"low");
     e.style.left=(n/460*100).toFixed(2)+"%";e.innerHTML=`<span><b>${n}</b> ${esc(t)}</span>`;bar.appendChild(e)})}}
  const marksD=marks.map(m=>[m[0],m[2]||m[1]]);
- let txt;
- if(coalition.size===0) txt=_T("kliknij partie albo miejsca w Sejmie, żeby złożyć koalicję");
- else{
-  const got=marksD.filter(([n])=>cn>=n).map(([,t])=>t);
-  const next=marksD.find(([n])=>cn<n);
-  txt=(got.length?_T`osiąga: ${got.join(", ")}. `:"")+
-      (next?_T`do progu ${next[0]} (${next[1]}) brakuje ${next[0]-cn}.`:marksD[marksD.length-1][1]===_T("większość konstytucyjna")?_T("pełna kontrola nad zmianą konstytucji."):_T("przekracza wszystkie progi."));
- }
- document.getElementById("coalnote").textContent=txt;
+ document.getElementById("coalnote").textContent=tekstKoalicji(coalition.size?cn:null,marksD);
+ rezerwujNotke();
 }
+function tekstKoalicji(cn,marksD){
+ if(cn===null) return _T("kliknij partie albo miejsca w Sejmie, żeby złożyć koalicję");
+ const got=marksD.filter(([n])=>cn>=n).map(([,t])=>t);
+ const next=marksD.find(([n])=>cn<n);
+ return (got.length?_T`osiąga: ${got.join(", ")}. `:"")+
+     (next?_T`do progu ${next[0]} (${next[1]}) brakuje ${next[0]-cn}.`:marksD[marksD.length-1][1]===_T("większość konstytucyjna")?_T("pełna kontrola nad zmianą konstytucji."):_T("przekracza wszystkie progi."));
+}
+/* 27.10: notka pod paskiem koalicji miała 1-4 linijki zależnie od wybranych partii, więc wszystko pod nią
+   skakało. Raz na szerokość mierzymy najdłuższą możliwą notkę (wszystkie lata, wszystkie progi) i trzymamy jej
+   wysokość jako min-height. */
+let NOTKA_W=0;
+function rezerwujNotke(){
+ const el=document.getElementById("coalnote"),w=el.clientWidth;if(!w||w===NOTKA_W)return;NOTKA_W=w;
+ const teraz=el.textContent,P=DATA.PROGI||{},zestawy=Object.values(P).length?Object.values(P):[[[231,_T("większość")]]];
+ const kand=[tekstKoalicji(null,[])];
+ zestawy.forEach(pr=>{const m=pr.map(x=>[x[0],x[2]||x[1]]);
+  [0,460,...m.flatMap(([n])=>[n-1,n])].forEach(n=>kand.push(tekstKoalicji(n,m)))});
+ el.style.minHeight="";let mx=0;
+ kand.forEach(t=>{el.textContent=t;mx=Math.max(mx,el.getBoundingClientRect().height)});
+ el.textContent=teraz;el.style.minHeight=Math.ceil(mx)+"px";
+}
+addEventListener("resize",rezerwujNotke);
 
 /* ---------------- tabela + stopka ---------------- */
 function paintTable(R){
