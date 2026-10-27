@@ -1577,7 +1577,7 @@ svg.map path.dist.moj.sel,.inset svg path.ipath.moj.sel{stroke:#1A1A1A;stroke-wi
  </div>
 </div>
 
-<div class="mm r point"><div class="note"><span id="pointtxt">Look at the table, not the formulas. I'll point out the largest numbers. The election commission does the same.</span></div><svg preserveAspectRatio="xMidYMax meet" class="sw" viewBox="0 0 67 62" aria-hidden="true"><use href="#sw-wskazuje"/></svg></div>
+<div class="mm r point"><div class="note"><span id="pointtxt">Look at the table, not the formulas. I'll point out the largest numbers. The election commission does the same. If you want to follow it one step at a time, press “Step →” and I'll show you everything.</span></div><svg preserveAspectRatio="xMidYMax meet" class="sw" viewBox="0 0 67 62" aria-hidden="true"><use href="#sw-wskazuje"/></svg></div>
 <div class="card" id="dhondt">
  <p class="lab center" style="color:#D94F4F">Step 3 · D'Hondt - is it that scary?</p>
  <h2 class="sec">We divide until the seats run out</h2>
@@ -2818,7 +2818,7 @@ function swFollow(){
       swPose(swScared?"szok":(step===0?"wskazuje":"patrzywdol"));
       const pt=document.getElementById("pointtxt");
       FLY.classList.toggle("mirror",step>0);
-      if(pt)pt.textContent = step===0 ? "Look at the table, not the formulas. I'll point out the largest numbers. The election commission does the same." : document.getElementById("say2").textContent;   // na starcie jak dawny duży; po pauzie/końcu zamyślony
+      if(pt)pt.textContent = step===0 ? "Look at the table, not the formulas. I'll point out the largest numbers. The election commission does the same. If you want to follow it one step at a time, press “Step →” and I'll show you everything." : document.getElementById("say2").textContent;   // na starcie jak dawny duży; po pauzie/końcu zamyślony
       FLY.style.left=(pr.left-cr.left)+"px";
       FLY.style.top=(pr.top-cr.top)+"px";
     }
