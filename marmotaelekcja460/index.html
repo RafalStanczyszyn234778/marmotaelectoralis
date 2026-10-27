@@ -133,6 +133,8 @@ svg.map g.kbox.sel rect{stroke:#1A1A1A;stroke-width:3}
 .langsw{position:absolute;top:.9rem;right:1.2rem;font:700 .68rem/1 var(--mono);letter-spacing:.08em;color:#1A1A1A;
  text-decoration:none;border:1.5px solid #1A1A1A;padding:.32rem .5rem;background:#fff}
 .langsw:hover{background:#1A1A1A;color:#fff}
+/* 27.10: na wąskich ekranach przycisk PL/EN nachodził na podpis i „460” - tu stoi we własnym rzędzie po prawej */
+@media(max-width:599px){.langsw{position:static;display:table;margin:0 0 .5rem auto}}
 svg.map g.kbox.wel{opacity:.38}   /* pole listy krajowej blednie razem z mapą poza zaznaczeniem */
 /* ramka: okręgi, które złapie, są przyciemnione; z Altem ramka wygląda jak stan, który nada */
 svg.map path.rh{filter:brightness(.72)}
